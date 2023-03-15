@@ -1,11 +1,17 @@
 import os
-import pynput
+from pynput.mouse import Button, Controller
+from pynput.keyboard import Key, Listener
+from pynput import keyboard
 import pandas as pd
+import setup
+import json
 
 CURRENT_DIR = os.getcwd()
 EXCEL_DIR = "Excel"
-EXCEL_FILENAMES = os.listdir("./%s" % EXCEL_DIR)
+EXCEL_FILENAMES = os.listdir("./{Excel_Dir}".format(Excel_Dir=EXCEL_DIR))
 sheet_name = "Time Sheet"
+
+mouse = Controller()
 
 
 class ExcelData:
@@ -82,6 +88,13 @@ def convert_df_to_excel_class(excel_array):
 if __name__ == "__main__":
     print(CURRENT_DIR)
     print(EXCEL_FILENAMES)
+    if input("begin setup? (y/n)") == 'y':
+        filename = "config.json"
+        config = setup.setup()
+        # remove the previous config.json
+        os.remove(filename)
+        with open(filename, 'w') as f:
+            json.dump(config, f, indent=4)
     for i in range(len(EXCEL_FILENAMES)):
         df = read_excel_data_to_numpy(EXCEL_FILENAMES[i])
         print(df)
