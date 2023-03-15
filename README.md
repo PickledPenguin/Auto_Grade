@@ -1,7 +1,7 @@
 # Auto_Excel
 
 This is a script created for the RIT SE department to help automate the process of inputting the student employees' hours from Excel spreadsheets into an external website. Previously, this had to be done mantually, cell-by-cell, line-by-line, which was tedious and unnessessary.
-Once the setup is completed correctly, this script will read data from all student Excel spreadsheets in a directory and input them into the external website through simulating mouse movements and keypresses via pyinput. 
+Once the setup is completed correctly, this script will read data from all student Excel spreadsheets in a directory and input them into the external website through simulating mouse movements and keypresses via pynput. 
 
 # Architecture Reasoning
 
@@ -9,3 +9,6 @@ This script does not determine where to input the Excel data from the external w
 This flexibility comes with several drawbacks: The initial setup process is long, the script is dependant on the screen being completely static and consistant every single time the script is run, and it can be imprecise. I believe these drawbacks are worth the flexibility, at least for such a small-scale project.
 
 # Setup
+Run the following two bash commands in the project directory:
+"pip install -r requirements.txt"
+"cmod -x auto_excel.py"
