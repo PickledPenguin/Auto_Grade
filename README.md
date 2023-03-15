@@ -1,7 +1,7 @@
 # Auto_Excel
 
 This is a script created for the RIT SE department to help automate the process of inputting the student employees' hours from Excel spreadsheets into an external website. Previously, this had to be done mantually, cell-by-cell, line-by-line, which was tedious and unnessessary.
-Once the setup is completed correctly, this script will read data from all student Excel spreadsheets in a directory and input them into the external website through simulating mouse movements and keypresses via pyinput. 
+Once the setup is completed correctly, this script will read data from all student Excel spreadsheets in a directory and input them into the external website through simulating mouse movements and keypresses via pynput. 
 
 # Architecture Reasoning
 
