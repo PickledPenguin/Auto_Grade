@@ -1,5 +1,8 @@
 import os
+
+import pynput.keyboard
 from pynput.mouse import Button, Controller
+from pynput.keyboard import Key, Controller
 from pynput.keyboard import Key, Listener
 from pynput import keyboard
 import pandas as pd
@@ -11,7 +14,8 @@ EXCEL_DIR = "Excel"
 EXCEL_FILENAMES = os.listdir("./{Excel_Dir}".format(Excel_Dir=EXCEL_DIR))
 sheet_name = "Time Sheet"
 
-mouse = Controller()
+Mouse = pynput.mouse.Controller()
+kb = pynput.keyboard.Controller()
 
 
 class ExcelData:
@@ -85,17 +89,28 @@ def convert_df_to_excel_class(excel_array):
     return ExcelData(student_name, faculty_name, course, badge_num, timesheet)
 
 
+def execute_config(config_file, excel_class):
+    for curr_config in config_file:
+        if curr_config["type"] == "click":
+            Mouse.position = curr_config["pos"]
+            Mouse.click(Button.left, 1)
+        if curr_config["type"] == "double-click":
+            Mouse.position = curr_config["pos"]
+            Mouse.click(Button.left, 2)
+        if curr_config["type"] == "student-name":
+            Mouse.position = curr_config["pos"]
+            kb.type(excel_class.student_name)
+        if curr_config["type"] == "timesheet":
+            # TODO type out timesheet using tab
+            continue
+
+
 if __name__ == "__main__":
-    print(CURRENT_DIR)
-    print(EXCEL_FILENAMES)
     if input("begin setup? (y/n)") == 'y':
         filename = "config.json"
-        config = setup.setup()
-        # remove the previous config.json
+        # remove the previous config.json te
         os.remove(filename)
         with open(filename, 'w') as f:
-            json.dump(config, f, indent=4)
-    for i in range(len(EXCEL_FILENAMES)):
-        df = read_excel_data_to_numpy(EXCEL_FILENAMES[i])
-        print(df)
-        print(convert_df_to_excel_class(df).timesheet)
+            json.dump(setup.setup(), f, indent=4)
+            for i in range(len(EXCEL_FILENAMES)):
+                execute_config(f, convert_df_to_excel_class(read_excel_data_to_numpy(EXCEL_FILENAMES[i])))
