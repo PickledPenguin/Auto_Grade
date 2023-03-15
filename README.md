@@ -9,3 +9,6 @@ This script does not determine where to input the Excel data from the external w
 This flexibility comes with several drawbacks: The initial setup process is long, the script is dependant on the screen being completely static and consistant every single time the script is run, and it can be imprecise. I believe these drawbacks are worth the flexibility, at least for such a small-scale project.
 
 # Setup
+Run the following two bash commands in the project directory:
+"pip install -r requirements.txt"
+"cmod -x auto_excel.py"
