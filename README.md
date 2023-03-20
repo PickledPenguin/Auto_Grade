@@ -50,8 +50,11 @@ Once you are finished, hit the 'esc' key to tell the script to stop listening fo
 # Running the Script
 
 First, ensure that all the recent student Excel files are stored in the "Excel" directory / folder.
+
 Then, set up your preferred wait time and waypoint configuration (See "Setting wait time" and "Setting up 'waypoints'")
+
 Next, type the following bash command in the project directory:
 "python3 ./auto_excel.py"
+
 A countdown will begin, which gives you time to complete the final step: Moving your mouse cursor to the screen / window / website where you want to execute the Excel data.
 That's it! If everything is set up correctly, the script will now automatically extract data from the given Excel files and follow the waypoints you set up to input the data into the website!
