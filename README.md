@@ -11,4 +11,4 @@ This flexibility comes with several drawbacks: The initial setup process is long
 # Setup
 Run the following two bash commands in the project directory:
 "pip install -r requirements.txt"
-"cmod -x auto_excel.py"
+"chmod -x auto_excel.py"

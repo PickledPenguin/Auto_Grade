@@ -15,6 +15,10 @@ sheet_name = "Time Sheet"
 
 Mouse = pynput.mouse.Controller()
 kb = pynput.keyboard.Controller()
+    
+
+def wait():
+    time.sleep(WAIT_DELAY_IN_SECONDS)
 
 
 class ExcelData:
@@ -120,7 +124,7 @@ def execute_timesheet(excel_class):
     
     def tab():
         kb.tap(Key.tab)
-        time.sleep(WAIT_DELAY_IN_SECONDS)
+        wait()
     
     print("execute timesheet reached")
     kb.type(excel_class.timesheet["Fri"]["time_in_1"])
@@ -184,7 +188,7 @@ def execute_timesheet(excel_class):
     kb.type(excel_class.timesheet["Thurs"]["time_in_2"])
     tab()
     kb.type(excel_class.timesheet["Thurs"]["time_out_2"])
-    time.sleep(WAIT_DELAY_IN_SECONDS)
+    wait()
 
 
 def execute_config(config_json, excel_class):
@@ -193,6 +197,7 @@ def execute_config(config_json, excel_class):
             print("clicking at the following point:")
             print(config_json[i]["pos"])
             Mouse.position = config_json[i]["pos"]
+            wait()
             Mouse.click(Button.left, 1)
         if config_json[i]["type"] == "double-click":
             print("double clicking at the following point:")
@@ -212,7 +217,7 @@ def execute_config(config_json, excel_class):
             print("waiting for %d seconds" % config_json[i]["seconds"])
             time.sleep(config_json[i]["seconds"])
 
-        time.sleep(WAIT_DELAY_IN_SECONDS)
+        wait()
 
 
 def execute(file):
