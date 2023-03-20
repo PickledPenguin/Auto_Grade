@@ -16,8 +16,7 @@ This flexibility comes with several drawbacks: The initial setup process is more
 
 # Required Installations
 
-1.) python3
-2.) pip or pip3
+python3, pip (or pip3)
 
 To install all the project requirments, type the following bash command in the project directory:
 "pip install -r requirements.txt" 
