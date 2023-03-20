@@ -9,13 +9,13 @@ import setup
 
 CURRENT_DIR = os.getcwd()
 EXCEL_DIR = "Excel"
-EXCEL_FILENAMES = os.listdir("./{Excel_Dir}".format(Excel_Dir=EXCEL_DIR))
+EXCEL_FILENAMES = os.listdir(f"./{EXCEL_DIR}")
 WAIT_DELAY_IN_SECONDS = 0.5
 sheet_name = "Time Sheet"
 
 Mouse = pynput.mouse.Controller()
 kb = pynput.keyboard.Controller()
-    
+
 
 def wait():
     time.sleep(WAIT_DELAY_IN_SECONDS)
@@ -31,7 +31,6 @@ class ExcelData:
 
 
 def read_excel_data_to_numpy(excel_filename):
-    print(excel_filename)
     # change directory to the Excel file directory
     os.chdir(EXCEL_DIR)
     # return a panda dataframe with data from the given Excel file
@@ -41,7 +40,6 @@ def read_excel_data_to_numpy(excel_filename):
 
 
 def convert_datetime(datetime):
-
     if isinstance(datetime, str):
         return ""
 
@@ -57,13 +55,14 @@ def convert_datetime(datetime):
     return f"{hour}:{minute}A" if is_time_am else f"{hour}:{minute}A"
 
 
-def convert_df_to_excel_class(excel_array):
+def convert_numpy_to_excel_class(filename, excel_array):
+    print(f"\nExtracting data from Excel file \"{filename}\":")
     student_name = excel_array[4, 2]
     reformatted_name_list = student_name.split(" ")
     reformatted_name = reformatted_name_list[1] + ', ' + reformatted_name_list[0]
     faculty_name = excel_array[5, 2]
     course = excel_array[6, 2]
-    badge_num = excel_array[4, 9]
+    badge_num = int(excel_array[4, 9])
     timesheet = {
         "Fri": {"date": excel_array[9, 2],
                 "time_in_1": convert_datetime(excel_array[9, 3]),
@@ -111,22 +110,20 @@ def convert_df_to_excel_class(excel_array):
 
     excel_data = ExcelData(faculty_name, course, reformatted_name, badge_num, timesheet)
 
-    print(excel_data.student_name)
-    print(excel_data.faculty_name)
-    print(excel_data.course)
-    print(excel_data.badge_num)
-    print(excel_data.timesheet)
+    print(f"Student Name: {excel_data.student_name}")
+    print(f"Faculty Name: {excel_data.faculty_name}")
+    print(f"Course: {excel_data.course}")
+    print(f"Badge Number: {excel_data.badge_num}")
+    print(f"Timesheet: {excel_data.timesheet}\n")
 
     return excel_data
 
 
 def execute_timesheet(excel_class):
-    
     def tab():
         kb.tap(Key.tab)
         wait()
-    
-    print("execute timesheet reached")
+
     kb.type(excel_class.timesheet["Fri"]["time_in_1"])
     tab()
     kb.type(excel_class.timesheet["Fri"]["time_out_1"])
@@ -189,60 +186,91 @@ def execute_timesheet(excel_class):
     tab()
     kb.type(excel_class.timesheet["Thurs"]["time_out_2"])
     wait()
+    kb.tap(Key.enter)
 
 
 def execute_config(config_json, excel_class):
+    print(f"Executing waypoints for student \"{excel_class.student_name}\" with badge number {excel_class.badge_num}:")
     for i in config_json:
+        # ignore the WAIT_DELAY_IN_SECONDS entry
+        if i == "WAIT_DELAY_IN_SECONDS":
+            continue
+        # click
         if config_json[i]["type"] == "click":
-            print("clicking at the following point:")
-            print(config_json[i]["pos"])
+            print("Clicking at the point: [%f, %f]" % (config_json[i]["pos"][0], config_json[i]["pos"][1]))
             Mouse.position = config_json[i]["pos"]
             wait()
             Mouse.click(Button.left, 1)
+        # double click
         if config_json[i]["type"] == "double-click":
-            print("double clicking at the following point:")
-            print(config_json[i]["pos"])
+            print("Double clicking at the point: [%f, %f]" % (config_json[i]["pos"][0], config_json[i]["pos"][1]))
             Mouse.position = config_json[i]["pos"]
+            wait()
             Mouse.click(Button.left, 2)
+        # type student name
         if config_json[i]["type"] == "student-name":
+            print(f"Typing student name (%s) at the point: [%f, %f]" % (excel_class.student_name, config_json[i]["pos"][0], config_json[i]["pos"][1]))
             Mouse.position = config_json[i]["pos"]
-            print(f"typing name: {excel_class.student_name}")
+            wait()
+            Mouse.click(Button.left, 1)
+            wait()
             kb.type(excel_class.student_name)
             kb.tap(Key.enter)
+        # enter timesheet
         if config_json[i]["type"] == "timesheet":
+            print("Entering student timesheet starting at the point: [%f, %f]" % (config_json[i]["pos"][0], config_json[i]["pos"][1]))
             Mouse.position = config_json[i]["pos"]
+            wait()
             Mouse.click(Button.left, 1)
+            wait()
             execute_timesheet(excel_class)
+        # wait
         if config_json[i]["type"] == "wait":
             print("waiting for %d seconds" % config_json[i]["seconds"])
             time.sleep(config_json[i]["seconds"])
-
         wait()
 
 
-def execute(file):
-    for i in EXCEL_FILENAMES:
-        execute_config(file, convert_df_to_excel_class(read_excel_data_to_numpy(i)))
+def execute(data):
+    for file in EXCEL_FILENAMES:
+        execute_config(data, convert_numpy_to_excel_class(file, read_excel_data_to_numpy(file)))
 
 
-if __name__ == "__main__":
+def optional_reset_config():
     filename = "config.json"
-    if input("Reset the configuration? (y/n)") == 'y':
+    if input("Reset program configuration? (y/n): ") == 'y':
         # remove the previous config.json file
         try:
             os.remove(filename)
+            print("Replacing config.json file:")
         except FileNotFoundError:
             print("No config.json file to remove, continuing")
+
+        # RUN SETUP SCRIPT
+        # Store configuration in config.json
         with open(filename, 'a+') as f:
             json.dump(setup.setup(), f, indent=4)
+
+        # get the new configuration from config.json
         with open(filename, 'r') as f:
-            data = json.load(f)
-            print("data:")
-            print(data)
-            execute(data)
+            return json.load(f)
     else:
+        # get the configuration from config.json
         with open(filename, 'r') as f:
-            data = json.load(f)
-            print("data:")
-            print(data)
-            execute(data)
+            return json.load(f)
+
+
+def run_config(data):
+    if input("Run program using current configuration (y/n): ") == 'y':
+        print("Countdown to executing waypoints:")
+        for i in range(5):
+            print(5-i)
+            time.sleep(1)
+        print("\nExtracting data from Excel files and beginning waypoint execution:\n")
+        # execute the configuration
+        execute(data)
+
+
+if __name__ == "__main__":
+    config_data = optional_reset_config()
+    run_config(config_data)
