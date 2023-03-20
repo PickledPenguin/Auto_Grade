@@ -96,7 +96,14 @@ def config():
     # reconfigure waypoints
     if input("Reconfigure waypoints? (y/n): ") == 'y':
         print("------------------------------------------------------")
-        print("Now listening for waypoints. Hit esc to end listening.")
+        print("Now listening for waypoints. Move your mouse to a point of interest on your screen and hit one of the "
+              "following keys to create a waypoint: \n\n \'c\' = Click (Click the left mouse button once at that point)"
+              "\n\n \'d\' = Double Click (Double-click the left mouse button at that point) \n\n \'n\' = Name (Click at"
+              "that point and type the student's name) \n\n \'t\' = Timesheet (Click at that point and begin "
+              "inputting the entire student timesheet. The script will hit the \'tab\' key to move through the "
+              "timesheet, so only select the first cell) \n\n \'w\' = Wait (Wait for between 1 and 9 seconds. After "
+              "hitting this key, type a number 1-9 to set the wait time. You can have multiple wait waypoints in a "
+              "row) \n\n Once you are finished, hit esc to end listening and create the config.json file.")
         # Collect events until released
         with keyboard.Listener(on_release=on_release) as listener:
             listener.join()
