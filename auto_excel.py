@@ -18,10 +18,12 @@ kb = pynput.keyboard.Controller()
 
 
 def wait():
+    """ for use after any meaningful action to give the website / other program time to catch up """
     time.sleep(WAIT_DELAY_IN_SECONDS)
 
 
 class ExcelData:
+    """ Excel class to store all relevant information from a student employee's Excel file """
     def __init__(self, faculty_name, course, student_name, badge_num, timesheet):
         self.faculty_name = faculty_name
         self.course = course
@@ -31,6 +33,8 @@ class ExcelData:
 
 
 def read_excel_data_to_numpy(excel_filename):
+    """ Reads the given Excel file's data and returns the data in the form of a numpy array """
+
     # change directory to the Excel file directory
     os.chdir(EXCEL_DIR)
     # return a panda dataframe with data from the given Excel file
@@ -40,6 +44,8 @@ def read_excel_data_to_numpy(excel_filename):
 
 
 def convert_datetime(datetime):
+    """ converts given datetime.datetime parameter into the correct time format: [hh:mm:A/P] """
+
     if isinstance(datetime, str):
         return ""
 
@@ -56,6 +62,8 @@ def convert_datetime(datetime):
 
 
 def convert_numpy_to_excel_class(filename, excel_array):
+    """ converts the given numpy array containing data from an Excel file into an Excel class """
+
     print(f"\nExtracting data from Excel file \"{filename}\":")
     student_name = excel_array[4, 2]
     reformatted_name_list = student_name.split(" ")
@@ -120,7 +128,12 @@ def convert_numpy_to_excel_class(filename, excel_array):
 
 
 def execute_timesheet(excel_class):
+    """ Executes the timesheet waypoints for the given Excel class
+    The user only needs to give the first location, as the rest of the
+    timesheet can be reached by hitting the 'tab' key on the keyboard """
+
     def tab():
+        """ taps the 'tab' key, then waits """
         kb.tap(Key.tab)
         wait()
 
@@ -190,6 +203,8 @@ def execute_timesheet(excel_class):
 
 
 def execute_config(config_json, excel_class):
+    """ Executes the waypoints given by the user for a specific Excel class """
+
     print(f"Executing waypoints for student \"{excel_class.student_name}\" with badge number {excel_class.badge_num}:")
     for i in config_json:
         # ignore the WAIT_DELAY_IN_SECONDS entry
@@ -232,11 +247,17 @@ def execute_config(config_json, excel_class):
 
 
 def execute(data):
+    """ Extracts the data from all Excel files in the EXCEL_FILENAMES directory and
+    executes the waypoints given by the user stored in the config.json file """
+
     for file in EXCEL_FILENAMES:
         execute_config(data, convert_numpy_to_excel_class(file, read_excel_data_to_numpy(file)))
+    print("\n Completed Excel data extraction and execution :)")
 
 
 def optional_reset_config():
+    """ Reset the wait time / waypoint configuration """
+
     filename = "config.json"
     if input("Reset program configuration? (y/n): ") == 'y':
         # remove the previous config.json file
@@ -249,7 +270,7 @@ def optional_reset_config():
         # RUN SETUP SCRIPT
         # Store configuration in config.json
         with open(filename, 'a+') as f:
-            json.dump(setup.setup(), f, indent=4)
+            json.dump(setup.config(), f, indent=4)
 
         # get the new configuration from config.json
         with open(filename, 'r') as f:
@@ -260,7 +281,9 @@ def optional_reset_config():
             return json.load(f)
 
 
-def run_config(data):
+def execution_countdown(data):
+    """ Start a countdown until execution to allow the user to move mouse over to the desired screen """
+
     if input("Run program using current configuration (y/n): ") == 'y':
         print("Countdown to executing waypoints:")
         for i in range(5):
@@ -272,5 +295,9 @@ def run_config(data):
 
 
 if __name__ == "__main__":
+
+    # Allow the user to change wait time / waypoint configuration if desired
     config_data = optional_reset_config()
-    run_config(config_data)
+    # Start countdown, then extract data from Excel files and execute the waypoints from the user's
+    # desired configuration with the data from each Excel file.
+    execution_countdown(config_data)

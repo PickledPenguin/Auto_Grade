@@ -1,6 +1,5 @@
 from pynput.mouse import Controller
 from pynput import keyboard
-import math
 
 configuration = {}
 config_counter = 0
@@ -9,6 +8,8 @@ wait_input = False
 
 
 def optional_set_wait_time():
+    """ Set the wait time between actions """
+
     global configuration
     while True:
         wait_time = input("what is your preferred wait time (between 0.0 and 10.0) in seconds between actions? (Press "
@@ -33,6 +34,8 @@ def optional_set_wait_time():
 
 
 def on_release(key):
+    """ Listen for waypoints, record mouse position at those waypoints, and return the information """
+
     global configuration, config_counter, mouse, wait_input
 
     if key == keyboard.Key.esc:
@@ -83,9 +86,10 @@ def on_release(key):
             config_counter += 1
 
 
-def setup():
-    global configuration, config_counter
+def config():
+    """ Run configuration of wait time and waypoints and store collected data in the config.json file """
 
+    global configuration, config_counter
     # set the wait time between actions
     configuration["WAIT_DELAY_IN_SECONDS"] = optional_set_wait_time()["WAIT_DELAY_IN_SECONDS"]
 
