@@ -250,6 +250,11 @@ def execute(data):
     """ Extracts the data from all Excel files in the EXCEL_FILENAMES directory and
     executes the waypoints given by the user stored in the config.json file """
 
+    global WAIT_DELAY_IN_SECONDS
+
+    # Set the wait delay to the user's set wait delay
+    WAIT_DELAY_IN_SECONDS = data["WAIT_DELAY_IN_SECONDS"]
+
     for file in EXCEL_FILENAMES:
         execute_config(data, convert_numpy_to_excel_class(file, read_excel_data_to_numpy(file)))
     print("\n Completed Excel data extraction and execution :)")
