@@ -10,7 +10,8 @@ wait_input = False
 def optional_set_wait_time():
     """ Set the wait time between actions """
 
-    global configuration
+    wait_configuration = {}
+
     while True:
         wait_time = input("what is your preferred wait time (between 0.0 and 10.0) in seconds between actions? (Press "
                           "enter for default value of 0.5 seconds): ")
@@ -29,8 +30,8 @@ def optional_set_wait_time():
             print(f"Wait time must be a number between 0.0 and 10.0 (you entered: {float(wait_time)})")
             continue
 
-    configuration["WAIT_DELAY_IN_SECONDS"] = float(wait_time)
-    return configuration
+    wait_configuration["WAIT_DELAY_IN_SECONDS"] = float(wait_time)
+    return wait_configuration
 
 
 def on_release(key):
