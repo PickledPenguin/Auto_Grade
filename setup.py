@@ -224,8 +224,8 @@ def input_data():
                 else:
                     print(f"\"input\" waypoint set for data for column {int(col)} and row {int(row)}")
                     configuration[config_counter]["sheet"] = sheet
-                    configuration[config_counter]["excel_col"] = int(col)
-                    configuration[config_counter]["excel_row"] = int(row)
+                    configuration[config_counter]["excel_col"] = int(row)
+                    configuration[config_counter]["excel_row"] = int(col)
                     config_counter += 1
                     # set flag variable to False
                     data_insert = False

@@ -5,7 +5,6 @@ from pynput.keyboard import Key, Listener, Controller
 import pandas as pd
 import time
 import json
-import setup
 import datetime
 
 CURRENT_DIR = os.getcwd()
