@@ -49,13 +49,6 @@ def optional_set_datetime_format():
 
     if input("Reconfigure format string for datetime type data? (y/n): ") == 'y':
 
-        print("The format string uses certain format codes are standard directives for specifying the "
-              "format in which you want to represent datetime type data. A comprehensive list of all the the format "
-              "codes can be found at this link: https://strftime.org/")
-        print("Using the format codes, you can \"insert\" parts of the datetime data into your desired format. For "
-              "example the format string: \"%H:%M%p\" will format the data like this: \"[Hour]:[Minute][AM or PM]\" "
-              "and the format string: \"Student completed work on %m/%d/%Y, which was a %A\" will format the data "
-              "like this: \"Student completed work on [month]/[day]/[year], which was a [Day of the week]\"\n")
         format_string = input("Enter the format string for datetime type data (press enter for default string "
                               "conversion): ")
         # if enter was pressed

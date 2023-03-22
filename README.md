@@ -27,12 +27,17 @@ or
 
 # Setting wait time
 
-Whenever you run the script you are given the option to set the wait time, which is the time (in seconds) between any meaningful action the script simulates. This gives the website time to catch up and helps make sure that no inputs or data is lost. If your connection is a little unstable, I would recommend increasing this wait time. The default wait time is 0.5 seconds.
+Before you run the script you are given the option to set the wait time, which is the time (in seconds) between any meaningful action the script simulates. This gives the website time to catch up and helps make sure that no inputs or data is lost. If your connection is a little unstable, I would recommend increasing this wait time. The default wait time is 0.5 seconds.
+
+
+# Setting datetime format string
+
+Before you run the script you are given the option to set the datetime format string, which is a string that uses certain format codes as standard directives for specifying the format in which you want to represent datetime type data. A comprehensive list of all the format codes can be found at this link: https://strftime.org Using the format codes, you can "insert" parts of the datetime data into your desired format. For example the format string: "%H:%M %p" will format the data like this: "*Hour*:*Minute* *AM or PM* and the format string: "Student completed work on %m/%d/%Y, which was a %A" will format the data like this: "Student completed work on *month*/*day*/*year*, which was a *Day of the week*"
 
 
 # Setting up "waypoints"
 
-Whenever you run the script you are given the option to reconfigure the waypoints, which are points of interest that you indicate on the screen for the program to either click, input data, or perform some other action. Currently, there are 5 different types of waypoints: Click, Double click, Tab, Enter, Paste, Insert, and Wait.
+When you run the script you are given the option to reconfigure the waypoints, which are points of interest that you indicate on the screen for the program to either click, input data, or perform some other action. Currently, there are 5 different types of waypoints: Click, Double click, Tab, Enter, Paste, Insert, and Wait.
 Each type of waypoint has a character (a key on a keyboard) associated with it. To create a waypoint, move your mouse to the point on the screen where you want the waypoint to be executed, then hit the key on your keyboard that matches the appropriate waypoint action. Some waypoints require additional data which you can input in the python window. Below is a list of all the current waypoint actions and the characters / keys associated with them:
 
 'c' = Click (Click the left mouse button at the point on your screen where your mouse is hovering)
@@ -46,8 +51,8 @@ Each type of waypoint has a character (a key on a keyboard) associated with it. 
 'p' = Paste (Type out a specified text)
 After hitting this key, return to the python window to input the desired text. After this is complete, the script will resume listening for other waypoints.
 
-'i' = Insert Data (Insert / type data in a specified column and row of the current Excel file)
-After hitting this key, return to the python window to input the desired column and row. After this is complete, the script will resume listening for other waypoints.
+'i' = Insert Data (Insert / type data in a specified sheet, column, and row of the current Excel file)
+After hitting this key, return to the python window to input the desired sheet, column, and row. After this is complete, the script will resume listening for other waypoints.
 
 'w'= Wait (Wait for a specified number of seconds). 
 After hitting this key, return to the python window to input the desired number of seconds. After this is complete, the script will resume listening for other waypoints.
