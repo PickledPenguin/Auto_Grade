@@ -1,17 +1,4 @@
 {
-    "WAIT_DELAY_IN_SECONDS": 2.0,
-    "0": {
-        "type": "click",
-        "pos": [
-            645.03515625,
-            147.10546875
-        ]
-    },
-    "1": {
-        "type": "student-name",
-        "pos": [
-            639.109375,
-            224.00390625
-        ]
-    }
+    "WAIT_DELAY_IN_SECONDS": 0.5,
+    "DATETIME_FORMAT_STR": "default"
 }
