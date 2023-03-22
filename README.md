@@ -17,6 +17,7 @@ This flexibility comes with several drawbacks: The initial setup process is more
 # Required Installations
 
 1.) python3
+
 2.) pip or pip3
 
 To install all the project requirements, type the following bash command in the project directory:
@@ -32,13 +33,13 @@ To configure the script, type the following bash command in the project director
 
 You will be able to configure the script's wait time between actions, datetime format string, and waypoints.
 
-*Setting wait time*
+*Setting wait time*: 
 The wait time is the time (in seconds) between any meaningful action the script simulates. This gives the website time to catch up and helps make sure that no inputs or data is lost. If your connection is a little unstable, I would recommend increasing this wait time. The default wait time is 0.5 seconds.
 
-*Setting datetime format string*
+*Setting datetime format string*: 
 The datetime format string is a string that uses certain format codes as standard directives for specifying the format in which you want to represent datetime type data. A comprehensive list of all the format codes can be found at this link: https://strftime.org Using the format codes, you can "insert" parts of the datetime data into your desired format. For example the format string: "%H:%M %p" will format the data like this: "*Hour*:*Minute* *AM or PM* and the format string: "Student completed work on %m/%d/%Y, which was a %A" will format the data like this: "Student completed work on *month*/*day*/*year*, which was a *Day of the week*"
 
-*Setting up "waypoints"*
+*Setting up "waypoints"*: 
 Waypoints are points of interest that you indicate on the screen for the program to either click, input data, or perform some other action. Currently, there are 5 different types of waypoints: Click, Double click, Tab, Enter, Paste, Insert, and Wait.
 Each type of waypoint has a character (a key on a keyboard) associated with it. To create a waypoint, move your mouse to the point on the screen where you want the waypoint to be executed, then hit the key on your keyboard that matches the appropriate waypoint action. Some waypoints require additional data which you can input in the python window. Below is a list of all the current waypoint actions and the characters / keys associated with them:
 
