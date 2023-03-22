@@ -39,6 +39,32 @@ def optional_set_wait_time():
     return wait_configuration
 
 
+def optional_set_datetime_format():
+    """ Set the format for datetime type data """
+
+    format_configuration = {}
+
+    print("The format string uses certain format codes are standard directives for specifying the "
+          "format in which you want to represent datetime type data. A comprehensive list of all the the format "
+          "codes can be found at this link: https://strftime.org/")
+    print("Using the format codes, you can \"insert\" parts of the datetime data into your desired format. For "
+          "example the format string: \"%H:%M%p\" will format the data like this: \"[Hour]:[Minute][AM or PM]\" "
+          "and the format string: \"Student completed work on %m/%d/%Y, which was a %A\" will format the data "
+          "like this: \"Student completed work on [month]/[day]/[year], which was a [Day of the week]\"\n")
+    format_string = input("Enter the format string for datetime type data (press enter for default string "
+                          "conversion): ")
+    # if enter was pressed
+    if format_string == '':
+        print("Format set to default string conversion")
+        format_string = 'default'
+    # if there is a format string
+    else:
+        print(f"Format set to {format_string}")
+
+    format_configuration["DATETIME_FORMAT_STR"] = format_string
+    return format_configuration
+
+
 def on_release(key):
     """ Listen for waypoints, record mouse position at those waypoints, and return the information """
 
@@ -182,8 +208,11 @@ def input_data():
     if data_insert:
         while True:
             # get input from the user
-            col = input("Enter the column the data is contained in (1st column = 1, 2nd column = 2, etc): ")
-            row = input("Enter the row the data is contained in (1st row = 1, 2nd row = 2, etc): ")
+            sheet = input("Enter the name of the sheet that the data is contained in (Case matters!): ")
+            col = input(f"Enter the column in the sheet \"{sheet}\" the data is contained in (1st column = 1, "
+                        f"2nd column = 2, etc): ")
+            row = input(f"Enter the row in the sheet \"{sheet}\" the data is contained in (1st row = 1, 2nd row = 2, "
+                        "etc): ")
             try:
                 # if the col or row is zero or negative
                 if int(col) <= 0 or int(row) <= 0:
@@ -193,6 +222,7 @@ def input_data():
                 # if the col and row are valid numbers
                 else:
                     print(f"\"input\" waypoint set for data for column {int(col)} and row {int(row)}")
+                    configuration[config_counter]["sheet"] = sheet
                     configuration[config_counter]["excel_col"] = int(col)
                     configuration[config_counter]["excel_row"] = int(row)
                     config_counter += 1
@@ -217,6 +247,7 @@ def config():
 
     # set the wait time between actions
     configuration["WAIT_DELAY_IN_SECONDS"] = optional_set_wait_time()["WAIT_DELAY_IN_SECONDS"]
+    configuration["DATETIME_FORMAT_STR"] = optional_set_datetime_format()["DATETIME_FORMAT_STR"]
 
     # reconfigure waypoints
     if input("Reconfigure waypoints? (y/n): ") == 'y':
