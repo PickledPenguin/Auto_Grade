@@ -17,25 +17,28 @@ def optional_set_wait_time():
 
     wait_configuration = {}
 
-    while True:
-        wait_time = input("what is your preferred wait time (between 0.0 and 10.0) in seconds between actions? (Press "
-                          "enter for default value of 0.5 seconds): ")
-        try:
-            if wait_time == '':
-                print("Wait time set to default value of 0.5 seconds")
-                wait_time = 0.5
-                break
-            elif not (0.0 <= float(wait_time) <= 10.0):
-                print(f"Wait time must be between 0.0 and 10.0 seconds (you entered: {float(wait_time)} seconds)")
-                continue
-            else:
-                print(f"Wait time set to {float(wait_time)} seconds")
-                break
-        except (ValueError, NameError):
-            print(f"Wait time must be a number between 0.0 and 10.0 (you entered: {float(wait_time)})")
-            continue
+    if input("Reconfigure wait time between actions? (y/n): ") == 'y':
 
-    wait_configuration["WAIT_DELAY_IN_SECONDS"] = float(wait_time)
+        while True:
+            wait_time = input("what is your preferred wait time (between 0.0 and 10.0) in seconds between actions? ("
+                              "Press enter for default value of 0.5 seconds): ")
+            try:
+                if wait_time == '':
+                    print("Wait time set to default value of 0.5 seconds")
+                    wait_time = 0.5
+                    break
+                elif not (0.0 <= float(wait_time) <= 10.0):
+                    print(f"Wait time must be between 0.0 and 10.0 seconds (you entered: {float(wait_time)} seconds)")
+                    continue
+                else:
+                    print(f"Wait time set to {float(wait_time)} seconds")
+                    break
+            except (ValueError, NameError):
+                print(f"Wait time must be a number between 0.0 and 10.0 (you entered: {float(wait_time)})")
+                continue
+
+        wait_configuration["WAIT_DELAY_IN_SECONDS"] = float(wait_time)
+
     return wait_configuration
 
 
@@ -44,24 +47,27 @@ def optional_set_datetime_format():
 
     format_configuration = {}
 
-    print("The format string uses certain format codes are standard directives for specifying the "
-          "format in which you want to represent datetime type data. A comprehensive list of all the the format "
-          "codes can be found at this link: https://strftime.org/")
-    print("Using the format codes, you can \"insert\" parts of the datetime data into your desired format. For "
-          "example the format string: \"%H:%M%p\" will format the data like this: \"[Hour]:[Minute][AM or PM]\" "
-          "and the format string: \"Student completed work on %m/%d/%Y, which was a %A\" will format the data "
-          "like this: \"Student completed work on [month]/[day]/[year], which was a [Day of the week]\"\n")
-    format_string = input("Enter the format string for datetime type data (press enter for default string "
-                          "conversion): ")
-    # if enter was pressed
-    if format_string == '':
-        print("Format set to default string conversion")
-        format_string = 'default'
-    # if there is a format string
-    else:
-        print(f"Format set to {format_string}")
+    if input("Reconfigure format string for datetime type data? (y/n): ") == 'y':
 
-    format_configuration["DATETIME_FORMAT_STR"] = format_string
+        print("The format string uses certain format codes are standard directives for specifying the "
+              "format in which you want to represent datetime type data. A comprehensive list of all the the format "
+              "codes can be found at this link: https://strftime.org/")
+        print("Using the format codes, you can \"insert\" parts of the datetime data into your desired format. For "
+              "example the format string: \"%H:%M%p\" will format the data like this: \"[Hour]:[Minute][AM or PM]\" "
+              "and the format string: \"Student completed work on %m/%d/%Y, which was a %A\" will format the data "
+              "like this: \"Student completed work on [month]/[day]/[year], which was a [Day of the week]\"\n")
+        format_string = input("Enter the format string for datetime type data (press enter for default string "
+                              "conversion): ")
+        # if enter was pressed
+        if format_string == '':
+            print("Format set to default string conversion")
+            format_string = 'default'
+        # if there is a format string
+        else:
+            print(f"Format set to {format_string}")
+
+        format_configuration["DATETIME_FORMAT_STR"] = format_string
+
     return format_configuration
 
 
@@ -270,6 +276,5 @@ def config():
         input_data()
 
         config_counter = 0
-        return configuration
-    else:
-        return None
+
+    return configuration

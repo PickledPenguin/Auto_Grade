@@ -53,6 +53,7 @@ def custom_time_format(excel_data, sheet, col, row, format_string):
     if format_string == "default":
         print("Defaulting to string conversion")
         print("string conversion: %s" % str(excel_time))
+        return str(excel_time)
     # if the Excel data at [col, row] is not a datetime object
     else:
         result = excel_time.strftime(format_string)

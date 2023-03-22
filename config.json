@@ -1,35 +1,28 @@
 {
     "WAIT_DELAY_IN_SECONDS": 0.5,
-    "DATETIME_FORMAT_STR": "%H:%M%p",
+    "DATETIME_FORMAT_STR": "default",
     "0": {
         "type": "click",
         "pos": [
-            1002.44921875,
-            735.0859375
+            1063.55859375,
+            631.6875
         ]
     },
     "1": {
         "type": "click",
         "pos": [
-            723.70703125,
-            71.8671875
+            734.3046875,
+            79.578125
         ]
     },
     "2": {
-        "type": "click",
-        "pos": [
-            429.84375,
-            167.46875
-        ]
-    },
-    "3": {
         "type": "insert-data",
         "sheet": "Time Sheet",
         "excel_col": 10,
         "excel_row": 4
     },
-    "4": {
+    "3": {
         "type": "wait",
-        "seconds": 2
+        "seconds": 1
     }
 }
