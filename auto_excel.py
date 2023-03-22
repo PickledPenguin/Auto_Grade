@@ -30,9 +30,12 @@ def read_excel_data_to_numpy(excel_filename):
     # return a panda dataframe with data from the given Excel file
     excel_dataframe = pd.read_excel(excel_filename, sheet_name=sheet_name)
     os.chdir("..")
-    print("numpy data:")
-    print(excel_dataframe.to_numpy())
-    return excel_dataframe.to_numpy()
+    result = excel_dataframe.to_numpy()
+    print("------------------------------------------------------")
+    print(f"Excel data for file \"{excel_filename}\":")
+    print(result)
+    print("------------------------------------------------------\n")
+    return result
 
 
 def execute_config(config_json, excel_data):
