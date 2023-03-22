@@ -223,12 +223,16 @@ def config():
         print("------------------------------------------------------")
         print("Now listening for waypoints. Move your mouse to a point of interest on your screen and hit one of the "
               "following keys to create a waypoint: \n\n \'c\' = Click (Click the left mouse button once at that point)"
-              "\n\n \'d\' = Double Click (Double-click the left mouse button at that point) \n\n \'i\' = Insert Data "
-              "(Click at that point and insert/type data in a specified column and row of the current Excel file). "
-              "After hitting this key, return to the python window to input the desired column and row and then "
-              "resume listening for waypoints \n\n \'w\' = wait (wait for a specified number of seconds). After "
-              "hitting this key, return to the python window to input the desired wait time and then resume listening "
-              "for waypoints. \n\n Once you are finished, hit esc to end listening and create the config.json file.")
+              "\n\n \'d\' = Double Click (Double-click the left mouse button at that point) \n\n \'t\' = Tab (hit the "
+              "Tab key) \n\n \'e\' = Enter (hit the Enter key) \n\n \'p\' = Paste (Paste a specified text). After "
+              "hitting this key, return to the python window to input the desired text. When this is complete, "
+              "the script will resume listening for other waypoints. \'i\' = Insert Data (Insert / type out data in a "
+              "specified column and row of the current Excel file). After hitting this key, return to the python "
+              "window to input the desired column and row. When this is complete, the script will resume listening "
+              "for other waypoints. \n\n \'w\' = wait (Wait for a specified number of seconds). After hitting this "
+              "key, return to the python window to input the desired wait time. When this is complete, the script "
+              "will resume listening for other waypoints. \n\n Once you are finished, hit esc to end listening and "
+              "create the config.json file.")
         # Collect events until released
         with keyboard.Listener(on_release=on_release) as listener:
             listener.join()

@@ -32,25 +32,32 @@ Whenever you run the script you are given the option to set the wait time, which
 
 # Setting up "waypoints"
 
-Whenever you run the script you are given the option to reconfigure the waypoints, which are points of interest that you indicate on the screen for the program to either click or input data. Currently, there are 5 different types of waypoints: Click, Double click, Name of student, Timesheet, and Wait.
-Each type of waypoint has a character, or a key on the keyboard, associated with it. To create a waypoint, move your mouse to the point on the screen where you want the waypoint to be executed, then hit the key on your keyboard that matches the appropriate waypoint action. Below is a list of all the current waypoint actions and the characters / keys associated with them:
+Whenever you run the script you are given the option to reconfigure the waypoints, which are points of interest that you indicate on the screen for the program to either click, input data, or perform some other action. Currently, there are 5 different types of waypoints: Click, Double click, Tab, Enter, Paste, Insert, and Wait.
+Each type of waypoint has a character (a key on a keyboard) associated with it. To create a waypoint, move your mouse to the point on the screen where you want the waypoint to be executed, then hit the key on your keyboard that matches the appropriate waypoint action. Some waypoints require additional data which you can input in the python window. Below is a list of all the current waypoint actions and the characters / keys associated with them:
 
-'c' = Click (Click the left mouse button once at that point)
+'c' = Click (Click the left mouse button at the point on your screen where your mouse is hovering)
 
-'d' = Double click (Double-click the left mouse button at that point)
+'d' = Double click (Double-click the left mouse button at the point on your screen where your mouse is hovering)
 
-'n' = Name of student (Click at that point and type the student's name)
+'t' = Tab (Press the tab button)
 
-'t' = Timesheet (Click at that point and begin inputting the entire Student timesheet. The script will hit the 'tab' key to move through the timesheet, so only select the first cell)
+'e' = Enter (Press the enter button)
 
-'w'= Wait (Wait for between 1 and 9 seconds. After hitting this key, type a number 1-9 to set the wait time. You can have multiple wait waypoints in a row)
+'p' = Paste (Type out a specified text)
+After hitting this key, return to the python window to input the desired text. After this is complete, the script will resume listening for other waypoints.
+
+'i' = Insert Data (Insert / type data in a specified column and row of the current Excel file)
+After hitting this key, return to the python window to input the desired column and row. After this is complete, the script will resume listening for other waypoints.
+
+'w'= Wait (Wait for a specified number of seconds). 
+After hitting this key, return to the python window to input the desired number of seconds. After this is complete, the script will resume listening for other waypoints.
 
 Once you are finished, hit the 'esc' key to tell the script to stop listening for waypoints and create the config.json file.
 
 
 # Running the Script
 
-First, ensure that all the recent student Excel files are stored in the "Excel" directory / folder.
+First, ensure that all the desired Excel files are stored in the "Excel" directory / folder.
 Then, set up your preferred wait time and waypoint configuration (See "Setting wait time" and "Setting up 'waypoints'")
 Next, type the following bash command in the project directory:
 "python3 ./auto_excel.py"
