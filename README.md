@@ -20,7 +20,7 @@ This flexibility comes with several drawbacks: The initial setup process is more
 
 2.) pip or pip3
 
-3.) all project requirments in requirements.txt
+3.) all project requirements in requirements.txt
 
 Once you have pip or pip3, type the following bash command in the project directory to install all the project requirements:
 
