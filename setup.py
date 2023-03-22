@@ -19,24 +19,24 @@ def optional_set_wait_time():
 
     wait_configuration = {"WAIT_DELAY_IN_SECONDS": 0.5}
 
-    if input("Reconfigure wait time between actions? (y/n): ") == 'y':
+    if input("Set wait time between actions? (y/n): ") == 'y':
 
         while True:
-            wait_time = input("what is your preferred wait time (between 0.0 and 10.0) in seconds between actions? ("
+            wait_time = input("what is your preferred wait time (between 0.0 and 100.0) in seconds between actions? ("
                               "Press enter for default value of 0.5 seconds): ")
             try:
                 if wait_time == '':
                     print("Wait time set to default value of 0.5 seconds")
                     wait_time = 0.5
                     break
-                elif not (0.0 <= float(wait_time) <= 10.0):
-                    print(f"Wait time must be between 0.0 and 10.0 seconds (you entered: {float(wait_time)} seconds)")
+                elif not (0.0 <= float(wait_time) <= 100.0):
+                    print(f"Wait time must be between 0.0 and 100.0 seconds (you entered: {float(wait_time)} seconds)")
                     continue
                 else:
                     print(f"Wait time set to {float(wait_time)} seconds")
                     break
             except (ValueError, NameError):
-                print(f"Wait time must be a number between 0.0 and 10.0 (you entered: {float(wait_time)})")
+                print(f"Wait time must be a number between 0.0 and 100.0 (you entered: {float(wait_time)})")
                 continue
 
         wait_configuration["WAIT_DELAY_IN_SECONDS"] = float(wait_time)
@@ -49,7 +49,7 @@ def optional_set_datetime_format():
 
     format_configuration = {"DATETIME_FORMAT_STR": "default"}
 
-    if input("Reconfigure format string for datetime type data? (y/n): ") == 'y':
+    if input("Set format string for datetime type data? (y/n): ") == 'y':
 
         format_string = input("Enter the format string for datetime type data (press enter for default string "
                               "conversion): ")
@@ -251,7 +251,7 @@ def config():
     configuration["DATETIME_FORMAT_STR"] = optional_set_datetime_format()["DATETIME_FORMAT_STR"]
 
     # reconfigure waypoints
-    if input("Reconfigure waypoints? (y/n): ") == 'y':
+    if input("Set waypoints? (y/n): ") == 'y':
         print("------------------------------------------------------")
         print("Now listening for waypoints. Move your mouse to a point of interest on your screen and hit one of the "
               "following keys to create a waypoint: \n\n \'c\' = Click (Click the left mouse button once at that point)"
@@ -281,10 +281,8 @@ def reset_config():
     filename = "config.json"
 
     # if the user wants to reset the configuration
-    if input("Reset program configuration? (y/n): ") == 'y':
+    if input("Reconfigure / Overwrite program configuration? (y/n): ") == 'y':
         # RUN SETUP SCRIPT
-        # Store configuration in config.json
-
         config_data = config()
         # remove the previous config.json file
         try:
@@ -292,7 +290,6 @@ def reset_config():
             print("Replacing config.json file:")
         except FileNotFoundError:
             print("No config.json file to remove, continuing")
-
         with open(filename, 'a+') as f:
             # create new config.json file
             json.dump(config_data, f, indent=4)

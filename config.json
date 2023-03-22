@@ -1,22 +1,4 @@
 {
     "WAIT_DELAY_IN_SECONDS": 0.5,
-    "DATETIME_FORMAT_STR": "default",
-    "0": {
-        "type": "click",
-        "pos": [
-            932.13671875,
-            722.76171875
-        ]
-    },
-    "1": {
-        "type": "click",
-        "pos": [
-            1238.0,
-            607.9375
-        ]
-    },
-    "2": {
-        "type": "wait",
-        "seconds": 1
-    }
+    "DATETIME_FORMAT_STR": "default"
 }
