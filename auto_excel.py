@@ -130,30 +130,13 @@ def execute(data):
     print("\n Completed Excel data extraction and execution :)")
 
 
-def optional_reset_config():
-    """ Reset the wait time / waypoint configuration """
+def get_config_data():
+    """ Gets the configuration data from the config.json file """
 
     filename = "config.json"
-    if input("Reset program configuration? (y/n): ") == 'y':
-        # remove the previous config.json file
-        try:
-            os.remove(filename)
-            print("Replacing config.json file:")
-        except FileNotFoundError:
-            print("No config.json file to remove, continuing")
-
-        # RUN SETUP SCRIPT
-        # Store configuration in config.json
-        with open(filename, 'a+') as f:
-            json.dump(setup.config(), f, indent=4)
-
-        # get the new configuration from config.json
-        with open(filename, 'r') as f:
-            return json.load(f)
-    else:
-        # get the configuration from config.json
-        with open(filename, 'r') as f:
-            return json.load(f)
+    # get the configuration from config.json
+    with open(filename, 'r') as f:
+        return json.load(f)
 
 
 def execution_countdown(data):
@@ -170,8 +153,6 @@ def execution_countdown(data):
 
 
 if __name__ == "__main__":
-    # Allow the user to change wait time / waypoint configuration if desired
-    config_data = optional_reset_config()
     # Start countdown, then extract data from Excel files and execute the waypoints from the user's
     # desired configuration with the data from each Excel file.
-    execution_countdown(config_data)
+    execution_countdown(get_config_data())

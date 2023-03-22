@@ -3,6 +3,8 @@ import sys
 from pynput.mouse import Controller
 from pynput import keyboard
 from pynput.keyboard import Key, Listener
+import os
+import json
 
 configuration = {}
 config_counter = 0
@@ -15,7 +17,7 @@ data_insert = False
 def optional_set_wait_time():
     """ Set the wait time between actions """
 
-    wait_configuration = {}
+    wait_configuration = {"WAIT_DELAY_IN_SECONDS": 0.5}
 
     if input("Reconfigure wait time between actions? (y/n): ") == 'y':
 
@@ -45,7 +47,7 @@ def optional_set_wait_time():
 def optional_set_datetime_format():
     """ Set the format for datetime type data """
 
-    format_configuration = {}
+    format_configuration = {"DATETIME_FORMAT_STR": "default"}
 
     if input("Reconfigure format string for datetime type data? (y/n): ") == 'y':
 
@@ -271,3 +273,45 @@ def config():
         config_counter = 0
 
     return configuration
+
+
+def reset_config():
+    """ Reset the wait time / waypoint configuration """
+
+    filename = "config.json"
+
+    # if the user wants to reset the configuration
+    if input("Reset program configuration? (y/n): ") == 'y':
+        # RUN SETUP SCRIPT
+        # Store configuration in config.json
+
+        config_data = config()
+        # remove the previous config.json file
+        try:
+            os.remove(filename)
+            print("Replacing config.json file:")
+        except FileNotFoundError:
+            print("No config.json file to remove, continuing")
+
+        with open(filename, 'a+') as f:
+            # create new config.json file
+            json.dump(config_data, f, indent=4)
+
+        # get the new configuration from config.json
+        with open(filename, 'r') as f:
+            return json.load(f)
+    # if the user does not want to reset configuration
+    else:
+        # get the configuration from config.json
+        with open(filename, 'r') as f:
+
+            return json.load(f)
+
+
+if __name__ == "__main__":
+    # Reset the configuration
+    config_file = reset_config()
+    print("\n------------------------------------------------------")
+    print("Current config.json file:")
+    print(config_file)
+    print("------------------------------------------------------")
