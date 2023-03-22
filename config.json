@@ -1,17 +1,29 @@
 {
-    "WAIT_DELAY_IN_SECONDS": 2.0,
+    "WAIT_DELAY_IN_SECONDS": 0.3,
     "0": {
         "type": "click",
         "pos": [
-            645.03515625,
-            147.10546875
+            953.65625,
+            706.84765625
         ]
     },
     "1": {
-        "type": "student-name",
+        "type": "click",
         "pos": [
-            639.109375,
-            224.00390625
+            742.828125,
+            74.8046875
+        ]
+    },
+    "2": {
+        "type": "insert-data",
+        "excel_col": 5,
+        "excel_row": 3
+    },
+    "3": {
+        "type": "click",
+        "pos": [
+            506.23828125,
+            75.97265625
         ]
     }
 }
