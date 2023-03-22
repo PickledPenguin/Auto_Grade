@@ -23,8 +23,11 @@ This flexibility comes with several drawbacks: The initial setup process is more
 3.) all project requirments in requirements.txt
 
 Once you have pip or pip3, type the following bash command in the project directory to install all the project requirements:
+
 "pip install -r requirements.txt" (for pip)
+
 or 
+
 "pip3 install -r requirements.txt" (for pip3)
 
 
@@ -42,7 +45,7 @@ The wait time is the time (in seconds) between any meaningful action the script 
 
 *Setting datetime format string*: 
 
-The datetime format string is a string that uses certain format codes as standard directives for specifying the format in which you want to represent datetime type data. A comprehensive list of all the format codes can be found at this link: https://strftime.org Using the format codes, you can "insert" parts of the datetime data into your desired format. For example the format string: "%H:%M %p" will format the data like this: "*Hour*:*Minute* *AM or PM* and the format string: "Student completed work on %m/%d/%Y, which was a %A" will format the data like this: "Student completed work on *month*/*day*/*year*, which was a *Day of the week*"
+The datetime format string is a string that uses certain format codes as standard directives for specifying the format in which you want to represent datetime type data. A comprehensive list of all the format codes can be found at this link: https://strftime.org Using the format codes, you can "insert" parts of the datetime data into your desired format. For example the format string: "%H:%M %p" will format the data like this: "**Hour**:**Minute** **AM or PM** and the format string: "Student completed work on %m/%d/%Y, which was a %A" will format the data like this: "Student completed work on **month**/**day**/**year**, which was a **Day of the week**"
 
 *Setting up "waypoints"*: 
 
@@ -74,7 +77,9 @@ Once you are finished, hit the 'esc' key to tell the script to stop listening fo
 Once you are done configuring the script, you are ready to run it!
 First, ensure that all the desired Excel files are stored in the "Excel" directory / folder.
 Then, type the following bash command in the project directory:
+
 "python3 ./auto_excel.py"
+
 A countdown will begin, which gives you time to complete the final step: Moving your mouse cursor to the screen / window / website where you want to execute the Excel data.
 That's it! If everything is set up correctly, the script will now automatically extract data from the given Excel files and follow the waypoints you set up to input the data into the website!
 
