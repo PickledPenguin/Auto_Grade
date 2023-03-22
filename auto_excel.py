@@ -58,7 +58,7 @@ def convert_datetime(datetime):
         hour -= 12
         is_time_am = False
     minute = datetime.minute
-    return f"{hour}:{minute}A" if is_time_am else f"{hour}:{minute}A"
+    return f"{hour}:{minute}A" if is_time_am else f"{hour}:{minute}P"
 
 
 def convert_numpy_to_excel_class(filename, excel_array):
