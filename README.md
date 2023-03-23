@@ -5,7 +5,7 @@ This script extracts data from the Excel files in the "Excel" directory and outp
 
 # Fun Background Info
 
-This is a script based on another script I created for the Rochester Institute of Technology's Software Engineering department to help automate the process of inputting the student employees' hours from Excel spreadsheets into an external website. Previously, this had to be done manually, cell-by-cell, line-by-line, which was tedious and unnecessary. So I decided to build this script to fix that problem and allow the SEO employees to free up a significant portion of their time for less drudging, more pressing tasks.
+This is a script that I created for the Rochester Institute of Technology's Software Engineering department to help automate the process of inputting the student employees' hours from Excel spreadsheets into an external website. Previously, this had to be done manually, cell-by-cell, line-by-line, which was tedious and unnecessary. So I decided to build this script to fix that problem and allow the SEO employees to free up a significant portion of their time for less drudging, more pressing tasks.
 
 
 # Architecture Details
