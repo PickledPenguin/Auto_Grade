@@ -98,7 +98,7 @@ This script executes the waypoints you configured for every Excel file in the "E
 
 *Wrong Excel sheet / columns / rows*:
 
-The way that python reads Excel files may eliminate "empty whitespace" around the Excel data. So, if your first row in your Excel file is completely blank, this script will not read it and instead treat the second row as the first row, assuming the second row has data. To make sure you have the right column and row, execute a quick test run for a sample Excel file, look at what is printed out under the Excel data section, find the column and row of the desired data on the array, and use that as your column and row.
+The way that python reads Excel files may eliminate "empty whitespace" around the Excel data. So, if your first row in your Excel file is completely blank, this script will not read it and instead treat the second row as the first row, assuming the second row has data. The script may also not read headings as well. To make sure you have the right column and row, execute a quick test run for a sample Excel file, look at what is printed out under the Excel data section, find the column and row of the desired data on the array, and use that as your column and row.
 Sometimes errors may arise if the script cannot access the Excel sheet you specified. Make sure the case matches, and you count the columns and rows correctly!
 
 *Wierd Excel data*:
