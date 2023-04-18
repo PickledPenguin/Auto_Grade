@@ -11,7 +11,6 @@ config_counter = 0
 mouse = Controller()
 wait_input = False
 paste_input = False
-data_insert = False
 
 
 def optional_set_wait_time():
@@ -69,7 +68,7 @@ def optional_set_datetime_format():
 def on_release(key):
     """ Listen for waypoints, record mouse position at those waypoints, and return the information """
 
-    global configuration, config_counter, mouse, wait_input, paste_input, data_insert
+    global configuration, config_counter, mouse, wait_input, paste_input
 
     if key == keyboard.Key.esc:
         # Stop listener
@@ -110,15 +109,22 @@ def on_release(key):
             print("\"e\" pressed - \"enter\" waypoint")
             configuration[config_counter] = {"type": "enter"}
 
+        # feedback waypoint
+        elif key.char == 'f':
+            print("\"f\" pressed - \"feedback\" waypoint")
+            configuration[config_counter] = {"type": "feedback"}
+
         # insert data waypoint
+        elif key.char == 'g':
+            print("\"g\" pressed - \"grade\" waypoint")
+            configuration[config_counter] = {"type": "grade"}
+
+        # insert student id waypoint
         elif key.char == 'i':
-            print("\"i\" pressed - \"insert data\" waypoint")
-            configuration[config_counter] = {"type": "insert-data"}
-            data_insert = True
-            print("------------------------------------------------------")
-            print("Paused listening for waypoints, please input desired column and row the data is contained in below")
-            print("------------------------------------------------------")
-            return False
+            print("\"i\" pressed - \"Student-ID\" waypoint")
+            configuration[config_counter] = {"type": "Student-ID"}
+
+
 
         # wait waypoint
         elif key.char == 'w':
@@ -148,7 +154,7 @@ def input_data():
     """listen for waypoints and gather user input for waypoints until the user hits esc to stop listening and
     finalize the config.json file"""
 
-    global configuration, config_counter, wait_input, paste_input, data_insert
+    global configuration, config_counter, wait_input, paste_input
 
     # if listening ended to collect input for a wait waypoint
     if wait_input:
@@ -205,41 +211,6 @@ def input_data():
 
         resume_listening()
 
-    # if listening was ended to collect input for an insert data waypoint
-    if data_insert:
-        while True:
-            # get input from the user
-            sheet = input("Enter the name of the sheet that the data is contained in (Case matters!): ")
-            col = input(f"Enter the column in the sheet \"{sheet}\" the data is contained in (1st column = 1, "
-                        f"2nd column = 2, etc): ")
-            row = input(f"Enter the row in the sheet \"{sheet}\" the data is contained in (1st row = 1, 2nd row = 2, "
-                        "etc): ")
-            try:
-                # if the col or row is zero or negative
-                if int(col) <= 0 or int(row) <= 0:
-                    print(
-                        f"\"input\" waypoint cannot have a negative column or row (you entered column: {int(col)}, row: {int(row)})")
-                    continue
-                # if the col and row are valid numbers
-                else:
-                    print(f"\"input\" waypoint set for data for column {int(col)} and row {int(row)}")
-                    configuration[config_counter]["sheet"] = sheet
-                    configuration[config_counter]["excel_col"] = int(col)
-                    configuration[config_counter]["excel_row"] = int(row)
-                    config_counter += 1
-                    # set flag variable to False
-                    data_insert = False
-                    print("------------------------------------------------------")
-                    print("Resumed listening for waypoints")
-                    print("------------------------------------------------------")
-                    break
-            # if the col or row is not a number
-            except ValueError:
-                print(f"\"wait\" waypoint must be set as a number (you entered column: {str(col)}, row: {str(row)})")
-                continue
-
-        resume_listening()
-
 
 def config():
     """ Run configuration of wait time and waypoints and store collected data in the config.json file """
@@ -253,18 +224,7 @@ def config():
     # reconfigure waypoints
     if input("Set waypoints? (y/n): ") == 'y':
         print("------------------------------------------------------")
-        print("Now listening for waypoints. Move your mouse to a point of interest on your screen and hit one of the "
-              "following keys to create a waypoint: \n\n \'c\' = Click (Click the left mouse button once at that point)"
-              "\n\n \'d\' = Double Click (Double-click the left mouse button at that point) \n\n \'t\' = Tab (hit the "
-              "Tab key) \n\n \'e\' = Enter (hit the Enter key) \n\n \'p\' = Paste (Paste a specified text). After "
-              "hitting this key, return to the python window to input the desired text. When this is complete, "
-              "the script will resume listening for other waypoints. \'i\' = Insert Data (Insert / type out data in a "
-              "specified column and row of the current Excel file). After hitting this key, return to the python "
-              "window to input the desired column and row. When this is complete, the script will resume listening "
-              "for other waypoints. \n\n \'w\' = wait (Wait for a specified number of seconds). After hitting this "
-              "key, return to the python window to input the desired wait time. When this is complete, the script "
-              "will resume listening for other waypoints. \n\n Once you are finished, hit esc to end listening and "
-              "create the config.json file.")
+        print("Now listening for waypoints.")
         # Collect events until released
         with keyboard.Listener(on_release=on_release) as listener:
             listener.join()
